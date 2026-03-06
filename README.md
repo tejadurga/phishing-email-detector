@@ -1,4 +1,4 @@
-# 🛡️ Phishing Email Detector
+# 🛡️ Spam Email Detector
 
 An enterprise-grade, high-accuracy Machine Learning project to detect phishing emails. Built with **Flask, RandomForest, XGBoost, and scikit-learn**.
 
@@ -13,8 +13,8 @@ An enterprise-grade, high-accuracy Machine Learning project to detect phishing e
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/phishing_detector.git
-cd phishing_detector
+git clone https://github.com/tejadurga/phishing-email-detector-detector.git
+cd phishing-email-detector
 ```
 
 **2. Install dependencies**
