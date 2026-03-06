@@ -1,0 +1,9 @@
+scikit-learn
+pandas
+flask
+nltk
+xgboost
+beautifulsoup4
+seaborn
+matplotlib
+tldextract

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Report | Spam Email Detector</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #dc2626; /* Red for primary brand/danger */
+            --primary-hover: #b91c1c;
+            --danger-bg: #fef2f2;
+            --danger-border: #fca5a5;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --warning: #eab308;
+            --warning-bg: #fefce8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--text-main) !important;
+            letter-spacing: -0.5px;
+        }
+
+        .report-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            margin-top: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .status-header {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-header.phishing {
+            background-color: var(--danger-bg);
+        }
+
+        .status-header.safe {
+            background-color: var(--success-bg);
+        }
+        
+        .status-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .phishing .status-icon {
+            color: var(--primary);
+        }
+        
+        .safe .status-icon {
+            color: var(--success);
+        }
+
+        .status-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .confidence-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .report-body {
+            padding: 3rem 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .report-body {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .indicator-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .indicator-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-card.flagged {
+            border-color: var(--danger-border);
+            background-color: var(--danger-bg);
+        }
+
+        .indicator-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .indicator-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flagged .indicator-value {
+            color: var(--primary);
+        }
+
+        .context-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 8px;
+            padding: 0.85rem 2.5rem;
+            font-weight: 600;
+            background: transparent;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+        
+        .btn-navbar {
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            background: #ffffff;
+        }
+        
+        .btn-navbar:hover {
+            background: var(--bg-color);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <i class="fa-solid fa-shield-halved fs-4" style="color: var(--primary);"></i>
+                Spam Email Detector
+            </a>
+            <a href="/" class="btn-navbar">
+                <i class="fa-solid fa-arrow-left me-1"></i> New Scan
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="report-card">
+                    {% if result.prediction == 'Phishing' %}
+                    <div class="status-header phishing">
+                        <i class="fa-solid fa-shield-virus status-icon"></i>
+                        <h1 class="status-title text-danger">Threat Detected</h1>
+                        <p class="text-muted mb-4 px-3">This email exhibits strong characteristics of a spam/phishing attempt.</p>
+                        <div class="confidence-badge">
+                            <i class="fa-solid fa-chart-pie text-danger"></i> Confidence: {{ result.confidence }}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="status-header safe">
+                        <i class="fa-solid fa-shield-check status-icon"></i>
+                        <h1 class="status-title text-success">Clean Document</h1>
+                        <p class="text-muted mb-4 px-3">This email appears to be legitimate based on current threat models.</p>
+                        <div class="confidence-badge">
+                            <i class="fa-solid fa-chart-pie text-success"></i> Confidence: {{ result.confidence }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="report-body">
+                        {% if result.error %}
+                            <div class="alert alert-warning border-warning rounded-3 mb-5 p-4 d-flex align-items-center gap-3" style="background-color: var(--warning-bg);">
+                                <i class="fa-solid fa-triangle-exclamation fs-2 text-warning"></i> 
+                                <div>
+                                    <strong class="d-block mb-1">Analysis Error:</strong> {{ result.error }}<br>
+                                    <small class="text-muted">{{ result.message }}</small>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <h3 class="section-title"><i class="fa-solid fa-microscope" style="color: var(--primary);"></i> Extracted Indicators</h3>
+                        
+                        <div class="row g-4 mt-1 mb-5">
+                            {% for key, val in result.features_extracted.items() %}
+                                {% if key != 'email_text' and key != 'subject' %}
+                                    <div class="col-md-4 col-sm-6">
+                                        <!-- Determine Flag Status -->
+                                        {% set is_flagged = false %}
+                                        {% set val_str = val | string %}
+                                        
+                                        {% if key == 'suspicious_urls' and val > 0 %} {% set is_flagged = true %} {% endif %}
+                                        {% if key == 'urgent_keywords' and val > 0 %} {% set is_flagged = true %} {% endif %}
+                                        {% if key == 'has_attachment' and val == 1 %} {% set is_flagged = true %} {% endif %}
+                                        {% if key == 'links_count' and val > 3 %} {% set is_flagged = true %} {% endif %}
+
+                                        <div class="indicator-card {% if is_flagged %}flagged{% endif %}">
+                                            <div class="indicator-label">{{ key|replace('_', ' ') }}</div>
+                                            <div class="indicator-value">
+                                                <span>{{ val_str[:6] }}{% if val_str|length > 6 %}...{% endif %}</span>
+                                                {% if is_flagged %}
+                                                    <i class="fa-solid fa-circle-exclamation fs-5 text-danger" title="Suspicious Indicator"></i>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <h3 class="section-title"><i class="fa-solid fa-bars-staggered" style="color: var(--primary);"></i> Analysis Context</h3>
+                        <div class="context-box">
+                            <strong class="text-muted text-uppercase d-block mb-2" style="font-size: 0.8rem; letter-spacing: 1px;">Analyzed Subject Line</strong>
+                            <p class="fs-5 mb-0 fw-semibold">{{ subject if subject else 'No Subject Provided' }}</p>
+                        </div>
+                        
+                        <div class="text-center mt-5 pt-4 border-top">
+                            <a href="/" class="btn btn-outline-primary">
+                                <i class="fa-solid fa-rotate-right"></i> Scan Another Document
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

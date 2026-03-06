@@ -1,0 +1,20 @@
+Title: Watch me catch phishing emails live with AI (96% Accuracy!)
+Duration: 2 minutes
+
+[0:00 - 0:15] Introduction
+Visual: Show the GitHub repo briefly.
+Voiceover: "Hey everyone! For my 3rd-year BTech CSE portfolio, I wanted to build something practical. Let me show you my new Phishing Email Detector, built with Python, Flask, XGBoost, and Random Forest!"
+
+[0:15 - 0:45] The Code & Training
+Visual: Terminal running `python train.py`.
+Voiceover: "The coolest part? It's zero-setup. It automatically generates a 20,000-sample dataset if you don't have one, extracts over 25 smart features like suspicious URLs and urgency keywords, and trains an ensemble model. Look at that—over 96% accuracy and 0.95 F1-score! And a confusion matrix is generated right here."
+
+[0:45 - 1:30] Web App Demo
+Visual: Browser at localhost:5000.
+Voiceover: "Let's test it live. Here's the web dashboard. I'll paste a real-looking spam email: 'URGENT: Your account is suspended, click here.' Let's hit scan..."
+Visual: Results page showing 'PHISHING' in red, with high confidence and extracted indicators.
+Voiceover: "Boom. Caught it immediately. It explains why: showing the extracted threat indicators like suspicious domains and urgent keywords."
+
+[1:30 - 2:00] Conclusion & API
+Visual: Postman making a request to `/predict`.
+Voiceover: "It also has a fully working REST API for developers. The entire project is open-source, Docker-ready, and deployable on platforms like Render. Check out the link in the comments to see the code and try it yourself. Thanks for watching!"

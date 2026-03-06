@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detector</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #dc2626; /* Red Color */
+            --primary-hover: #b91c1c;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main) !important;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary);
+        }
+
+        .clean-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 3rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .clean-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control {
+            background-color: #ffffff;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.025);
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            background-color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+            outline: none;
+        }
+        
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--primary-hover);
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);
+        }
+
+        .hero-section {
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <i class="fa-solid fa-shield-halved fs-4"></i>
+                Spam Email Detector
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Secure Your Inbox</h1>
+            <p class="hero-subtitle">Professional machine learning analysis to detect and identify spam or phishing attempts with maximum accuracy.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="clean-card mb-5">
+                    <form action="/predict" method="POST">
+                        <div class="mb-4">
+                            <label for="subject" class="form-label"><i class="fa-regular fa-envelope me-2 text-muted"></i>Email Subject</label>
+                            <input type="text" class="form-control" name="subject" placeholder="e.g. Action Required for Your Account" autocomplete="off">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email_text" class="form-label"><i class="fa-solid fa-align-left me-2 text-muted"></i>Email Content</label>
+                            <textarea class="form-control" name="email_text" rows="7" required placeholder="Paste the raw email text or HTML content here to begin analysis..."></textarea>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa-solid fa-magnifying-glass me-2"></i> Initiate Threat Scan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0"><i class="fa-solid fa-lock me-2"></i> End-to-end local inference. User data is not stored or transmitted.</p>
+        </div>
+    </footer>
+</body>
+</html>
