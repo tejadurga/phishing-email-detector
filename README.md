@@ -33,7 +33,7 @@ python train.py
 ```bash
 python app.py
 ```
-Access the dashboard at `http://localhost:5000`
+Access the dashboard at https://phishing-email-detector-rk0i.onrender.com/
 
 ## 🐳 Deployment
 See `deploy.yaml` for Render/Docker deployment configurations.
